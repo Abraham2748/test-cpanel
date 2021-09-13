@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/inovzubs/public_html/demos/
+    - /bin/cp index.html $DEPLOYPATH
