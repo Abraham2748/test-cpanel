@@ -1,17 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "inovzubs_test_user";
-$password = "4abcKFC!asd";
 
-try {
-  $conn = new PDO("mysql:host=$servername;dbname=inovzubs_my_test_db", $username, $password);
-  // set the PDO error mode to exception
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  echo "Connected successfully";
-  echo "<br>";
-  echo 'Current PHP version: ' . phpversion();
-  $conn = null;
-} catch(PDOException $e) {
-  echo "Connection failed: " . $e->getMessage();
-}
+require_once "clases/conexion/conexion.php";
+
+$conexion = new conexion;
+
 ?>

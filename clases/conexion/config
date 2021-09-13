@@ -1,0 +1,9 @@
+{
+    "conexion": {
+        "server": "localhost",
+        "user": "inovzubs_test_user",
+        "password": "4abcKFC!asd",
+        "database": "inovzubs_restapi",
+        "port": "3306"
+    }
+}
