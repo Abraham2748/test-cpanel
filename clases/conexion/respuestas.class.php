@@ -4,7 +4,7 @@ class respuestas {
 
     private $response = [
         "status" => "ok",
-        "result" = array()
+        "result" => array()
     ];
 
     public function error_405() {
