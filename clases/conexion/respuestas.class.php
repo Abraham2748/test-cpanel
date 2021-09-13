@@ -13,7 +13,7 @@ class respuestas {
             "error_id" => "405",
             "error_msg" => "Method Not Allowed",
         );
-        return $response;
+        return $this->$response;
     }
     
     public function error_200($message = "Incorrect data") {
@@ -22,7 +22,7 @@ class respuestas {
             "error_id" => "200",
             "error_msg" => $message,
         );
-        return $response;
+        return $this->$response;
     }
 
     public function error_400() {
@@ -31,7 +31,7 @@ class respuestas {
             "error_id" => "400",
             "error_msg" => "Incomplete data",
         );
-        return $response;
+        return $this->$response;
     }
 }
 
