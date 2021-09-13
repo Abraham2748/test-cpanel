@@ -21,7 +21,6 @@ class conexion {
             echo "Error connecting";
             die();
         }
-        echo "Connected successfully";
     }
 
     private function datos_conexion() {
