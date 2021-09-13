@@ -46,6 +46,21 @@ class conexion {
         }
         return $this->convertirUTF8($resultArray);
     }
+
+    public function nonQuery($sql_query) {
+        $results = $this->conexion->query($sql_query);
+        return $this->conexion->affected_rows;
+    }
+
+    public function nonQueryId($sql_query) {
+        $results = $this->conexion->query($sql_query);
+        $filas = $this->conexion->affected_rows;
+        if($filas >= 1) {
+            return $this->conexion->insert_id;
+        } else {
+            return 0;
+        }
+    }
 }
 
 ?>
