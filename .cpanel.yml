@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/inovzubs/public_html/demos/test-cpanel/
-    - /bin/cp * $DEPLOYPATH
+    - /bin/cp . $DEPLOYPATH
