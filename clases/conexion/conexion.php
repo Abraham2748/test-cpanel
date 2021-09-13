@@ -29,6 +29,24 @@ class conexion {
         $jsondata = file_get_contents($direccion . "/" . "config");
         return json_decode($jsondata, true);
     }
+
+    private function convertirUTF8($array) {
+        array_walk_recursive($array, function(&$item, $key){
+            if(!mb_detect_encoding($item, 'utf-8', true)) {
+                $item = utf8_encode($item);
+            }
+        });
+        return $array;
+    }
+
+    public function obtenerDatos($sql_query) {
+        $results = $this->conexion->query($sql_query);
+        $resultArray = array();
+        foreach ($results as $key => $value) {
+            $resultArray[] = $key;
+        }
+        return $this->convertirUTF8($resultArray);
+    }
 }
 
 ?>
