@@ -42,7 +42,7 @@ class conexion {
         $results = $this->conexion->query($sql_query);
         $resultArray = array();
         foreach ($results as $key => $value) {
-            $resultArray[] = $key;
+            $resultArray[] = $value;
         }
         return $this->convertirUTF8($resultArray);
     }
