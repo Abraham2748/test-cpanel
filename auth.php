@@ -1,7 +1,7 @@
 <?php
 
-require_once('clases/auth.class.php');
-require_once('clases/respuestas.class.php');
+require_once('clases/conexion/auth.class.php');
+require_once('clases/conexion/respuestas.class.php');
 
 $_respuestas = new respuestas;
 
