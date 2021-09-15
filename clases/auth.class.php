@@ -14,7 +14,16 @@ class auth extends conexion {
             if($datosUsuario) {
                 if($password == $datosUsuario[0]["Password"]) {
                     if($datosUsuario[0]["Estado"] == "Activo") {
-                        
+                        $token = $this->insertarToken($datos[0]['UsuarioId']);
+                        if($token) {
+                            $result = $_respuestas->response;
+                            $result['result'] = array(
+                                "token"=>$token
+                            );
+                            return $result;
+                        } else {
+                            return $_respuestas->error_500();
+                        }
                     } else {
                         return $_respuestas->error_200("User $usuario is not active.");
                     }
@@ -37,6 +46,20 @@ class auth extends conexion {
             return $datos;
         } else {
             return null;
+        }
+    }
+
+    private function insertarToken($usuarioId) {
+        $cstrong = true;
+        $token = bin2hex(openssl_random_pseudo_bytes(16, $cstrong));
+        $date = date('Y-m-d H:i');
+        $estado = "Activo";
+        $query = "INSERT INTO usuarios_token (UsuarioId, Token, Estado, Fecha) VALUES ('$usuarioId','$token','$estado','$date');";
+        $existe = parent::nonQuery($query);
+        if($existe) {
+            return $token;
+        } else {
+            return false;
         }
     }
 }

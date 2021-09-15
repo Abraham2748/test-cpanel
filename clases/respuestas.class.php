@@ -33,6 +33,16 @@ class respuestas {
         );
         return $this->response;
     }
+
+    
+    public function error_500() {
+        $this->response["status"] = "error";
+        $this->response["result"] = array(
+            "error_id" => "500",
+            "error_msg" => "Internal Server Error",
+        );
+        return $this->response;
+    }
 }
 
 ?>
