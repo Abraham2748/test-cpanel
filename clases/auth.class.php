@@ -14,7 +14,7 @@ class auth extends conexion {
             if($datos) {
                 return $datos;
             } else {
-                return $_respuestas->error_200("User does not exist");
+                return $_respuestas->error_200("User $usuario does not exist");
             }
         } else {
             return $_respuestas->error_400();
