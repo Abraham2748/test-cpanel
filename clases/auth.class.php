@@ -25,8 +25,7 @@ class auth extends conexion {
     private function obtenerDatosUsuario($correo) {
         $query = "SELECT * FROM usuarios WHERE Usuario = '$correo'";
         $datos = parent::obtenerDatos($query);
-        return $datos;
-        if(isset($datos[0]['usuarioId'])) {
+        if(isset($datos[0]['UsuarioId'])) {
             return $datos;
         } else {
             return 0;
