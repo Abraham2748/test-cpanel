@@ -9,10 +9,14 @@ class auth extends conexion {
         $datos = json_decode($json, true);
         if(isset($datos['usuario']) && isset($datos["password"])) {
             $usuario = $datos["usuario"];
-            $password = $datos["password"];
+            $password = md5($datos["password"]);
             $datos = $this->obtenerDatosUsuario($usuario);
             if($datos) {
-                return $datos;
+                if($password == $datos[0]["password"]) {
+                    return $datos;
+                } else {
+                    return $_respuestas->error_200("Incorrect password");
+                }
             } else {
                 return $_respuestas->error_200("User $usuario does not exist");
             }
