@@ -11,6 +11,7 @@ class auth extends conexion {
             $usuario = $datos["usuario"];
             $password = $datos["password"];
             $datos = $this->obtenerDatosUsuario($usuario);
+            return $datos;
             if($datos) {
                 return $datos;
             } else {
