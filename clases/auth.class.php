@@ -13,6 +13,11 @@ class auth extends conexion {
             $datosUsuario = $this->obtenerDatosUsuario($usuario);
             if($datosUsuario) {
                 if($password == $datosUsuario[0]["Password"]) {
+                    if($datosUsuario[0]["Estado"] == "Activo") {
+                        
+                    } else {
+                        return $_respuestas->error_200("User $usuario is not active.");
+                    }
                     return $datosUsuario;
                 } else {
                     return $_respuestas->error_200("Incorrect password");
