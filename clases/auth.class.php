@@ -11,7 +11,6 @@ class auth extends conexion {
             $usuario = $datos["usuario"];
             $password = $datos["password"];
             $datos = $this->obtenerDatosUsuario($usuario);
-            return $datos;
             if($datos) {
                 return $datos;
             } else {
@@ -28,7 +27,7 @@ class auth extends conexion {
         if(isset($datos[0]['UsuarioId'])) {
             return $datos;
         } else {
-            return 0;
+            return null;
         }
     }
 }
