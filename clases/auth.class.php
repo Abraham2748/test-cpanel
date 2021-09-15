@@ -7,13 +7,13 @@ class auth extends conexion {
     public function login($json) {
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
-        if(isset($datos['suario']) && isset($datos["password"])) {
+        if(isset($datos['usuario']) && isset($datos["password"])) {
             $usuario = $datos["usuario"];
             $password = md5($datos["password"]);
             $datosUsuario = $this->obtenerDatosUsuario($usuario);
             if($datosUsuario) {
                 if($password == $datosUsuario[0]["Password"]) {
-                    return $datos;
+                    return $datosUsuario;
                 } else {
                     return $_respuestas->error_200("Incorrect password");
                 }
