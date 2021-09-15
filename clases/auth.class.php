@@ -14,7 +14,7 @@ class auth extends conexion {
             if($datosUsuario) {
                 if($password == $datosUsuario[0]["Password"]) {
                     if($datosUsuario[0]["Estado"] == "Activo") {
-                        $token = $this->insertarToken($datos[0]['UsuarioId']);
+                        $token = $this->insertarToken($datosUsuario[0]['UsuarioId']);
                         if($token) {
                             $result = $_respuestas->response;
                             $result['result'] = array(
