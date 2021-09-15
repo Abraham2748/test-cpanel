@@ -52,9 +52,8 @@ class auth extends conexion {
     private function insertarToken($usuarioId) {
         $cstrong = true;
         $token = bin2hex(openssl_random_pseudo_bytes(16, $cstrong));
-        $date = date('Y-m-d H:i:s');
         $estado = "Activo";
-        $query = "INSERT INTO usuarios_token (UsuarioId, Token, Estado, Fecha) VALUES ('$usuarioId','$token','$estado','$date');";
+        $query = "INSERT INTO usuarios_token (UsuarioId, Token, Estado, Fecha) VALUES ('$usuarioId','$token','$estado', UTC_TIMESTAMP);";
         $existe = parent::nonQuery($query);
         if($existe) {
             return $token;
