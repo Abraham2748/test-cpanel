@@ -15,6 +15,7 @@ class auth extends conexion {
                 if($password == $datosUsuario[0]["Password"]) {
                     if($datosUsuario[0]["Estado"] == "Activo") {
                         $token = $this->insertarToken($datosUsuario[0]['UsuarioId']);
+                        return $token;
                         if($token) {
                             $result = $_respuestas->response;
                             $result['result'] = array(
@@ -52,7 +53,7 @@ class auth extends conexion {
     private function insertarToken($usuarioId) {
         $cstrong = true;
         $token = bin2hex(openssl_random_pseudo_bytes(16, $cstrong));
-        $date = date('Y-m-d H:i');
+        $date = date('Y-m-d H:i:s');
         $estado = "Activo";
         $query = "INSERT INTO usuarios_token (UsuarioId, Token, Estado, Fecha) VALUES ('$usuarioId','$token','$estado','$date');";
         $existe = parent::nonQuery($query);
