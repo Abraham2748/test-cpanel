@@ -13,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET["rowsPerPage"])) {
         $rowsPerPage = $_GET["rowsPerPage"];
     }
-    $_pacientes->listaPacientes($page, $rowsPerPage);
+    $listaPacientes = $_pacientes->listaPacientes($page, $rowsPerPage);
+    echo json_encode($listaPacientes);
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo 'Hello POST';
 } else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {

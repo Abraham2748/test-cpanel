@@ -15,6 +15,8 @@ class pacientes extends conexion
         }
 
         $query = "SELECT * FROM " . $this->table . " LIMIT $initialRow, $rowsPerPage";
-        print_r($query);
+
+        $datos = parent::obtenerDatos($query);
+        return $datos;
     }
 }
