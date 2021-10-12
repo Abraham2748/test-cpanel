@@ -7,7 +7,13 @@ $_respuestas = new respuestas;
 $_pacientes = new pacientes;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $_pacientes->listaPacientes(3, 3);
+    if (isset($_GET["page"])) {
+        $page = $_GET["page"];
+    }
+    if (isset($_GET["rowsPerPage"])) {
+        $rowsPerPage = $_GET["rowsPerPage"];
+    }
+    $_pacientes->listaPacientes($page, $rowsPerPage);
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo 'Hello POST';
 } else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {

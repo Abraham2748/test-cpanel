@@ -7,14 +7,14 @@ class pacientes extends conexion
 {
 
     private $table = "pacientes";
-    public function listaPacientes($pagina, $cantidad)
+    public function listaPacientes($page = 1, $rowsPerPage = 10)
     {
-        $inicio = 0;
-        if ($pagina > 1) {
-            $inicio = ($cantidad * ($pagina - 1));
+        $initialRow = 0;
+        if ($page > 1) {
+            $initialRow = ($rowsPerPage * ($page - 1));
         }
 
-        $query = "SELECT * FROM " . $this->table . " LIMIT $inicio, $cantidad";
+        $query = "SELECT * FROM " . $this->table . " LIMIT $initialRow, $rowsPerPage";
         print_r($query);
     }
 }
