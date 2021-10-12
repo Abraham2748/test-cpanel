@@ -11,7 +11,7 @@ class pacientes extends conexion
     {
         $inicio = 0;
         if ($pagina > 1) {
-            $inicio = ($cantidad * ($pagina - 1)) + 1;
+            $inicio = ($cantidad * ($pagina - 1));
         }
 
         $query = "SELECT * FROM " . $this->table . " LIMIT $inicio, $cantidad";
