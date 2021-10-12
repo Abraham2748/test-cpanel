@@ -4,9 +4,10 @@ require_once 'clases/respuestas.class.php';
 require_once 'clases/pacientes.class.php';
 
 $_respuestas = new respuestas;
+$_pacientes = new pacientes;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    echo 'Hello GET';
+    $_pacientes->listaPacientes(1);
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo 'Hello POST';
 } else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
