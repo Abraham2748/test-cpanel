@@ -7,6 +7,7 @@ class pacientes extends conexion
 {
 
     private $table = "pacientes";
+
     public function listaPacientes($page = 1, $rowsPerPage = 10)
     {
         $initialRow = 0;
@@ -16,7 +17,12 @@ class pacientes extends conexion
 
         $query = "SELECT * FROM " . $this->table . " LIMIT $initialRow, $rowsPerPage";
 
-        $datos = parent::obtenerDatos($query);
-        return $datos;
+        return parent::obtenerDatos($query);
+    }
+
+    public function obtenerPaciente($id)
+    {
+        $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
+        return parent::obtenerDatos($query);
     }
 }
