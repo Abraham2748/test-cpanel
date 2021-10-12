@@ -7,7 +7,7 @@ $_respuestas = new respuestas;
 $_pacientes = new pacientes;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $_pacientes->listaPacientes(0, 100);
+    $_pacientes->listaPacientes(3, 10);
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo 'Hello POST';
 } else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
