@@ -25,4 +25,14 @@ class pacientes extends conexion
         $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
         return parent::obtenerDatos($query);
     }
+
+    public function agregarPaciente($json)
+    {
+        $_respuestas = new respuestas;
+        $datos = json_decode($json, true);
+
+        if (isset($datos["nombre"]) && isset($datos["dni"]) && isset($datos["correo"])) {
+            return $_respuestas->error_400();
+        }
+    }
 }
