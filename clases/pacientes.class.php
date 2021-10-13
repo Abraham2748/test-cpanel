@@ -32,6 +32,8 @@ class pacientes extends conexion
         $datos = json_decode($json, true);
 
         if (isset($datos["nombre"]) && isset($datos["dni"]) && isset($datos["correo"])) {
+            return 'Good JSON!';
+        } else {
             return $_respuestas->error_400();
         }
     }
