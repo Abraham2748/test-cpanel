@@ -8,6 +8,16 @@ class pacientes extends conexion
 
     private $table = "pacientes";
 
+    private $pacienteId = "";
+    private $dni = "";
+    private $nombre = "";
+    private $direccion = "";
+    private $codigoPostal = "";
+    private $genero = "";
+    private $telefono = "";
+    private $fechaNacimiento = "000-00-00";
+
+
     public function listaPacientes($page = 1, $rowsPerPage = 10)
     {
         $initialRow = 0;
@@ -32,7 +42,21 @@ class pacientes extends conexion
         $datos = json_decode($json, true);
 
         if (isset($datos["nombre"]) && isset($datos["dni"]) && isset($datos["correo"])) {
-            return 'Good JSON!';
+            $this->nombre = $datos["nombre"];
+            $this->dni = $datos["dni"];
+            $this->correo = $datos["correo"];
+
+            if (isset($datos["direccion"])) $this->direccion = $datos["direccion"];
+            if (isset($datos["codigoPostal"])) $this->codigoPostal = $datos["codigoPostal"];
+            if (isset($datos["genero"])) $this->genero = $datos["genero"];
+            if (isset($datos["telefono"])) $this->telefono = $datos["telefono"];
+            if (isset($datos["fechaNacimiento"])) $this->fechaNacimiento = $datos["fechaNacimiento"];
+
+            $query = "INSERT INTO " . $this->table . " (DNI, Nombre, Direccion, CodigoPostal, Telefono, Genero, FechaNacimiento, Correo) VALUES ('"
+                . $this->dni . "', '" . $this->nombre . "', '" . $this->direccion . "', '" . $this->codigoPostal . "', '"
+                . $this->telefono . "', '" . $this->genero . "', '" . $this->fechaNacimiento . "', '" . $this->correo . "')";
+
+            return $query;
         } else {
             return $_respuestas->error_400();
         }
