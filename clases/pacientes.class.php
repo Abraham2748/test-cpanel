@@ -54,9 +54,16 @@ class pacientes extends conexion
 
             $query = "INSERT INTO " . $this->table . " (DNI, Nombre, Direccion, CodigoPostal, Telefono, Genero, FechaNacimiento, Correo) VALUES ('"
                 . $this->dni . "', '" . $this->nombre . "', '" . $this->direccion . "', '" . $this->codigoPostal . "', '"
-                . $this->telefono . "', '" . $this->genero . "', '" . $this->fechaNacimiento . "', '" . $this->correo . "')";
+                . $this->telefono . "', '" . $this->genero . "', '" . $this->fechaNacimiento . "', '" . $this->correo . "');";
 
-            return $query;
+            $id = parent::nonQueryId($query);
+            if ($id) {
+                $res = $_respuestas->response;
+                $res["result"] = array("pacienteId" => $id);
+            } else {
+                $res = $_respuestas->error_500();
+            }
+            return $res;
         } else {
             return $_respuestas->error_400();
         }
