@@ -48,12 +48,12 @@ class conexion {
     }
 
     public function nonQuery($sql_query) {
-        $results = $this->conexion->query($sql_query);
+        $this->conexion->query($sql_query);
         return $this->conexion->affected_rows;
     }
 
     public function nonQueryId($sql_query) {
-        $results = $this->conexion->query($sql_query);
+        $this->conexion->query($sql_query);
         $filas = $this->conexion->affected_rows;
         if($filas >= 1) {
             return $this->conexion->insert_id;
@@ -62,5 +62,3 @@ class conexion {
         }
     }
 }
-
-?>
