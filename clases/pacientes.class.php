@@ -83,12 +83,11 @@ class pacientes extends conexion
             $telefono = $datos["telefono"];
             $fechaNacimiento = $datos["fechaNacimiento"];
 
-            $query = "UPDATE " . $this->table . "SET DNI = '" . $dni . "', Nombre = '" . $nombre
+            $query = "UPDATE " . $this->table . " SET DNI = '" . $dni . "', Nombre = '" . $nombre
                 . "', Direccion = '" . $direccion . "', CodigoPostal = '" . $codigoPostal . "', "
                 . "Telefono = '" . $telefono . "', Genero = '" . $genero . "', FechaNacimiento = '" . $fechaNacimiento . "', "
                 . "Correo = '" . $correo . "' WHERE PacienteId = " . $pacienteId;
 
-            return $query;
             $affected_rows = parent::nonQuery($query);
             if ($affected_rows == 1) {
                 $res = $_respuestas->response;
