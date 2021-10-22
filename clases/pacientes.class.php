@@ -88,6 +88,7 @@ class pacientes extends conexion
                 . "Telefono = '" . $telefono . "', Genero = '" . $genero . "', FechaNacimiento = '" . $fechaNacimiento . "', "
                 . "Correo = '" . $correo . "' WHERE PacienteId = " . $pacienteId;
 
+            return $query;
             $affected_rows = parent::nonQuery($query);
             if ($affected_rows == 1) {
                 $res = $_respuestas->response;
