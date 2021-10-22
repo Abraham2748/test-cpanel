@@ -26,7 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $response = $_pacientes->agregarPaciente($postBody);
     echo json_encode($response);
 } else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-    echo 'Hello PUT';
+    $postBody = file_get_contents("php://input");
+    $response = $_pacientes->actualizarPaciente($postBody);
+    echo json_encode($response);
 } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     echo 'Hello DELETE';
 } else {

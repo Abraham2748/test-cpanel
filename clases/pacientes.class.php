@@ -8,15 +8,6 @@ class pacientes extends conexion
 
     private $table = "pacientes";
 
-    private $pacienteId = "";
-    private $dni = "";
-    private $nombre = "";
-    private $direccion = "";
-    private $codigoPostal = "";
-    private $genero = "";
-    private $telefono = "";
-    private $fechaNacimiento = "000-00-00";
-
 
     public function listaPacientes($page = 1, $rowsPerPage = 10)
     {
@@ -36,30 +27,70 @@ class pacientes extends conexion
         return parent::obtenerDatos($query);
     }
 
+    private function validarPaciente($datos)
+    {
+        return isset($datos["nombre"]) && isset($datos["dni"])
+            && isset($datos["correo"]) && isset($datos["direccion"])
+            && isset($datos["codigoPostal"]) && isset($datos["genero"])
+            && isset($datos["telefono"]) && isset($datos["fechaNacimiento"]);
+    }
+
     public function agregarPaciente($json)
     {
         $_respuestas = new respuestas;
         $datos = json_decode($json, true);
 
-        if (isset($datos["nombre"]) && isset($datos["dni"]) && isset($datos["correo"])) {
-            $this->nombre = $datos["nombre"];
-            $this->dni = $datos["dni"];
-            $this->correo = $datos["correo"];
-
-            if (isset($datos["direccion"])) $this->direccion = $datos["direccion"];
-            if (isset($datos["codigoPostal"])) $this->codigoPostal = $datos["codigoPostal"];
-            if (isset($datos["genero"])) $this->genero = $datos["genero"];
-            if (isset($datos["telefono"])) $this->telefono = $datos["telefono"];
-            if (isset($datos["fechaNacimiento"])) $this->fechaNacimiento = $datos["fechaNacimiento"];
+        if ($this->validarPaciente($datos)) {
+            $nombre = $datos["nombre"];
+            $dni = $datos["dni"];
+            $correo = $datos["correo"];
+            $direccion = $datos["direccion"];
+            $codigoPostal = $datos["codigoPostal"];
+            $genero = $datos["genero"];
+            $telefono = $datos["telefono"];
+            $fechaNacimiento = $datos["fechaNacimiento"];
 
             $query = "INSERT INTO " . $this->table . " (DNI, Nombre, Direccion, CodigoPostal, Telefono, Genero, FechaNacimiento, Correo) VALUES ('"
-                . $this->dni . "', '" . $this->nombre . "', '" . $this->direccion . "', '" . $this->codigoPostal . "', '"
-                . $this->telefono . "', '" . $this->genero . "', '" . $this->fechaNacimiento . "', '" . $this->correo . "');";
+                . $dni . "', '" . $nombre . "', '" . $direccion . "', '" . $codigoPostal . "', '"
+                . $telefono . "', '" . $genero . "', '" . $fechaNacimiento . "', '" . $correo . "');";
 
             $id = parent::nonQueryId($query);
             if ($id) {
                 $res = $_respuestas->response;
                 $res["result"] = array("pacienteId" => $id);
+            } else {
+                $res = $_respuestas->error_500();
+            }
+            return $res;
+        } else {
+            return $_respuestas->error_400();
+        }
+    }
+
+    public function actualizarPaciente($json)
+    {
+        $_respuestas = new respuestas;
+        $datos = json_decode($json, true);
+
+        if (isset($datos["pacienteId"]) && $this->validarPaciente($datos)) {
+            $pacienteId = $datos["pacienteId"];
+            $nombre = $datos["nombre"];
+            $dni = $datos["dni"];
+            $correo = $datos["correo"];
+            $direccion = $datos["direccion"];
+            $codigoPostal = $datos["codigoPostal"];
+            $genero = $datos["genero"];
+            $telefono = $datos["telefono"];
+            $fechaNacimiento = $datos["fechaNacimiento"];
+
+            $query = "UPDATE " . $this->table . "SET DNI = '" . $dni . "', Nombre = '" . $nombre
+                . "', Direccion = '" . $direccion . "', CodigoPostal = '" . $codigoPostal . "', "
+                . "Telefono = '" . $telefono . "', Genero = '" . $genero . "', FechaNacimiento = '" . $fechaNacimiento . "', "
+                . "Correo = '" . $correo . "' WHERE PacienteId = " . $pacienteId;
+
+            $affected_rows = parent::nonQuery($query);
+            if ($affected_rows == 1) {
+                $res = $_respuestas->response;
             } else {
                 $res = $_respuestas->error_500();
             }
