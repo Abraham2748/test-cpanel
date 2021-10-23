@@ -99,4 +99,18 @@ class pacientes extends conexion
             return $_respuestas->error_400();
         }
     }
+
+
+    public function eliminarPaciente($id)
+    {
+        $query = "DELETE FROM " . $this->table . " WHERE PacienteId = '$id'";
+        $affected_rows = parent::nonQuery($query);
+        $_respuestas = new respuestas;
+        if ($affected_rows == 1) {
+            $res = $_respuestas->response;
+        } else {
+            $res = $_respuestas->error_500();
+        }
+        return $res;
+    }
 }

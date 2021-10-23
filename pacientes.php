@@ -20,6 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $datosPaciente = $_pacientes->obtenerPaciente($pacienteId);
         echo json_encode($datosPaciente);
         http_response_code(200);
+    } else {
+        $datosArray = $_respuestas->error_200();
+        echo json_encode($datosArray);
     }
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $postBody = file_get_contents("php://input");
@@ -30,7 +33,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $response = $_pacientes->actualizarPaciente($postBody);
     echo json_encode($response);
 } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    echo 'Hello DELETE';
+    if (isset($_GET['id'])) {
+        $pacienteId = $_GET["id"];
+        $response = $_pacientes->eliminarPaciente($pacienteId);
+        echo json_encode($response);
+        http_response_code(200);
+    } else {
+        $datosArray = $_respuestas->error_200();
+        echo json_encode($datosArray);
+    }
 } else {
     $datosArray = $_respuestas->error_405();
     echo json_encode($datosArray);
