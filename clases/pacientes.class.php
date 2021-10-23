@@ -26,9 +26,9 @@ class pacientes extends conexion
         $_respuestas = new respuestas;
         $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
         $paciente = parent::obtenerDatos($query);
-        if ($paciente) {
+        if (sizeof($paciente) == 1) {
             $res = $_respuestas->response;
-            $res["result"] = $paciente;
+            $res["result"] = $paciente[0];
         } else {
             $res = $_respuestas->error_500();
         }
