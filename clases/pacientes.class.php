@@ -25,10 +25,10 @@ class pacientes extends conexion
     {
         $_respuestas = new respuestas;
         $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
-        $pacientes = parent::obtenerDatos($query);
-        if ($pacientes) {
+        $paciente = parent::obtenerDatos($query);
+        if ($paciente) {
             $res = $_respuestas->response;
-            $res["result"] = array("pacientes" => $pacientes);
+            $res["result"] = $paciente;
         } else {
             $res = $_respuestas->error_500();
         }
