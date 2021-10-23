@@ -4,7 +4,7 @@ class respuestas {
 
     public $response = [
         "status" => "ok",
-        "result" => array()
+        "result" => null
     ];
 
     public function error_405() {
@@ -44,5 +44,3 @@ class respuestas {
         return $this->response;
     }
 }
-
-?>
