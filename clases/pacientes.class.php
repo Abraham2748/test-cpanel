@@ -23,8 +23,16 @@ class pacientes extends conexion
 
     public function obtenerPaciente($id)
     {
+        $_respuestas = new respuestas;
         $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
-        return parent::obtenerDatos($query);
+        $pacientes = parent::obtenerDatos($query);
+        if ($pacientes) {
+            $res = $_respuestas->response;
+            $res["result"] = array("pacientes" => $pacientes);
+        } else {
+            $res = $_respuestas->error_500();
+        }
+        return $res;
     }
 
     private function validarPaciente($datos)
