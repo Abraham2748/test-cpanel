@@ -29,6 +29,8 @@ class pacientes extends conexion
         if (sizeof($paciente) == 1) {
             $res = $_respuestas->response;
             $res["result"] = $paciente[0];
+        } else if (sizeof($paciente) == 0) {
+            $res = $_respuestas->error_200("id not found");
         } else {
             $res = $_respuestas->error_500();
         }
