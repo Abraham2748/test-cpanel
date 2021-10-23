@@ -118,6 +118,8 @@ class pacientes extends conexion
         $_respuestas = new respuestas;
         if ($affected_rows == 1) {
             $res = $_respuestas->response;
+        } else if ($affected_rows == 0) {
+            $res = $_respuestas->error_200("id not found");
         } else {
             $res = $_respuestas->error_500();
         }
