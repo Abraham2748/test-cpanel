@@ -45,7 +45,7 @@ class auth extends conexion
     {
         $query = "SELECT * FROM usuarios_token WHERE Token = '" . $token . "' AND Estado = 'Activo'";
         $result = parent::obtenerDatos($query);
-        return $result;
+        return $token;
         // return sizeof($result) == 1;
     }
 
