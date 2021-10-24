@@ -8,6 +8,10 @@ $_pacientes = new pacientes;
 
 header('Content-Type: application/json');
 
+echo print_r(getallheaders());
+
+return;
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET["page"])) {
         $page = $_GET["page"];
