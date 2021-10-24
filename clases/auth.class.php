@@ -47,7 +47,8 @@ class auth extends conexion
         $query = "SELECT * FROM usuarios_token WHERE Token = '" . $token . "' AND Estado = 'Activo' AND Fecha > DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 HOUR)";
         $result = parent::obtenerDatos($query);
         if (sizeof($result) == 1) {
-            // $query = "UPDATE usuarios_token SET Fecha = UTC_TIMESTAMP WHERE Token = '" . $token . "'";
+            $query = "UPDATE usuarios_token SET Fecha = UTC_TIMESTAMP WHERE Token = '" . $token . "'";
+            parent::nonQuery($query);
             return true;
         } else {
             return false;
