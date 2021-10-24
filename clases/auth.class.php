@@ -43,6 +43,7 @@ class auth extends conexion
 
     public function validateToken($token)
     {
+        $token = substr($token, 7);
         $query = "SELECT * FROM usuarios_token WHERE Token = '" . $token . "' AND Estado = 'Activo'";
         $result = parent::obtenerDatos($query);
         return $token;
