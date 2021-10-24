@@ -6,11 +6,15 @@ require_once 'clases/pacientes.class.php';
 $_respuestas = new respuestas;
 $_pacientes = new pacientes;
 
-echo print_r(getallheaders());
 
-header('Content-Type: application/json');
+$headers = getallheaders();
 
-return;
+if (!isset($headers["Authorization"])) {
+    echo json_encode($_respuestas->error_401());
+    http_response_code(401);
+    return;
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET["page"])) {

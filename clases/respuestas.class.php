@@ -1,13 +1,15 @@
 <?php
 
-class respuestas {
+class respuestas
+{
 
     public $response = [
         "status" => "ok",
         "result" => null
     ];
 
-    public function error_405() {
+    public function error_405()
+    {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "405",
@@ -15,8 +17,9 @@ class respuestas {
         );
         return $this->response;
     }
-    
-    public function error_200($message = "Incorrect data") {
+
+    public function error_200($message = "Incorrect data")
+    {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "200",
@@ -25,7 +28,8 @@ class respuestas {
         return $this->response;
     }
 
-    public function error_400() {
+    public function error_400()
+    {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "400",
@@ -34,8 +38,19 @@ class respuestas {
         return $this->response;
     }
 
-    
-    public function error_500() {
+    public function error_401()
+    {
+        $this->response["status"] = "error";
+        $this->response["result"] = array(
+            "error_id" => "401",
+            "error_msg" => "Invalid or expired token",
+        );
+        return $this->response;
+    }
+
+
+    public function error_500()
+    {
         $this->response["status"] = "error";
         $this->response["result"] = array(
             "error_id" => "500",
