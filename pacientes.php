@@ -1,8 +1,10 @@
 <?php
 
+require_once('clases/auth.class.php');
 require_once 'clases/respuestas.class.php';
 require_once 'clases/pacientes.class.php';
 
+$_auth = new auth;
 $_respuestas = new respuestas;
 $_pacientes = new pacientes;
 
@@ -12,6 +14,10 @@ $headers = getallheaders();
 if (!isset($headers["Authorization"])) {
     echo json_encode($_respuestas->error_401());
     http_response_code(401);
+    return;
+} else {
+    $authorized = $_auth->validateToken($headers["Authorization"]);
+    echo json_encode($authorized);
     return;
 }
 
