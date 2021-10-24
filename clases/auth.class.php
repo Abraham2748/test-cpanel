@@ -44,9 +44,14 @@ class auth extends conexion
     public function validateToken($token)
     {
         $token = substr($token, 7);
-        $query = "SELECT * FROM usuarios_token WHERE Token = '" . $token . "' AND Estado = 'Activo'";
+        $query = "SELECT * FROM usuarios_token WHERE Token = '" . $token . "' AND Estado = 'Activo' AND Fecha > DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 HOUR)";
         $result = parent::obtenerDatos($query);
-        return sizeof($result) == 1;
+        if (sizeof($result) == 1) {
+            // $query = "UPDATE usuarios_token SET Fecha = UTC_TIMESTAMP WHERE Token = '" . $token . "'";
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function obtenerDatosUsuario($correo)
