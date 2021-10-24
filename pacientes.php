@@ -6,9 +6,9 @@ require_once 'clases/pacientes.class.php';
 $_respuestas = new respuestas;
 $_pacientes = new pacientes;
 
-header('Content-Type: application/json');
-
 echo print_r(getallheaders());
+
+header('Content-Type: application/json');
 
 return;
 
