@@ -1,9 +1,9 @@
 <?php
 
-require_once "conexion/conexion.php";
+require_once "connection/connection.php";
 require_once "respuestas.class.php";
 
-class auth extends conexion
+class auth extends Connection
 {
     public function login($json)
     {

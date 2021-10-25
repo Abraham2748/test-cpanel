@@ -1,8 +1,8 @@
 <?php
 
-require_once "clases/conexion/conexion.php";
+require_once "clases/conexion/connection.php";
 
-$conexion = new conexion;
+$connection = new Connection;
 
 // $query = "SELECT * FROM pacientes";
 

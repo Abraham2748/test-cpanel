@@ -1,9 +1,9 @@
 <?php
 
-require_once "conexion/conexion.php";
+require_once "connection/connection.php";
 require_once "respuestas.class.php";
 
-class pacientes extends conexion
+class pacientes extends Connection
 {
 
     private $table = "pacientes";
