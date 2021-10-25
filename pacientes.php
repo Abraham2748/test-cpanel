@@ -1,24 +1,24 @@
 <?php
 
-require_once('clases/auth.class.php');
-require_once 'clases/respuestas.class.php';
-require_once 'clases/pacientes.class.php';
+require_once('classes/auth.class.php');
+require_once 'classes/responses.class.php';
+require_once 'classes/pacientes.class.php';
 
 $_auth = new auth;
-$_respuestas = new respuestas;
+$_responses = new responses;
 $_pacientes = new pacientes;
 
 
 $headers = getallheaders();
 
 if (!isset($headers["Authorization"])) {
-    echo json_encode($_respuestas->error_401());
+    echo json_encode($_responses->error_401());
     http_response_code(401);
     return;
 } else {
     $authorized = $_auth->validateToken($headers["Authorization"]);
     if (!$authorized) {
-        echo json_encode($_respuestas->error_401());
+        echo json_encode($_responses->error_401());
         http_response_code(401);
         return;
     }
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         echo json_encode($datosPaciente);
         http_response_code(200);
     } else {
-        $datosArray = $_respuestas->error_200();
+        $datosArray = $_responses->error_200();
         echo json_encode($datosArray);
     }
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -56,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         echo json_encode($response);
         http_response_code(200);
     } else {
-        $datosArray = $_respuestas->error_200();
+        $datosArray = $_responses->error_200();
         echo json_encode($datosArray);
     }
 } else {
-    $datosArray = $_respuestas->error_405();
+    $datosArray = $_responses->error_405();
     echo json_encode($datosArray);
 }

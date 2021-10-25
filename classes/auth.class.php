@@ -1,13 +1,13 @@
 <?php
 
 require_once "connection/connection.php";
-require_once "respuestas.class.php";
+require_once "responses.class.php";
 
 class auth extends Connection
 {
     public function login($json)
     {
-        $_respuestas = new respuestas;
+        $_responses = new responses;
         $datos = json_decode($json, true);
         if (isset($datos['usuario']) && isset($datos["password"])) {
             $usuario = $datos["usuario"];
@@ -18,26 +18,26 @@ class auth extends Connection
                     if ($datosUsuario[0]["Estado"] == "Activo") {
                         $token = $this->insertarToken($datosUsuario[0]['UsuarioId']);
                         if ($token) {
-                            $result = $_respuestas->response;
+                            $result = $_responses->response;
                             $result['result'] = array(
                                 "token" => $token
                             );
                             return $result;
                         } else {
-                            return $_respuestas->error_500();
+                            return $_responses->error_500();
                         }
                     } else {
-                        return $_respuestas->error_200("User $usuario is not active.");
+                        return $_responses->error_200("User $usuario is not active.");
                     }
                     return $datosUsuario;
                 } else {
-                    return $_respuestas->error_200("Incorrect password");
+                    return $_responses->error_200("Incorrect password");
                 }
             } else {
-                return $_respuestas->error_200("User $usuario does not exist");
+                return $_responses->error_200("User $usuario does not exist");
             }
         } else {
-            return $_respuestas->error_400();
+            return $_responses->error_400();
         }
     }
 

@@ -1,10 +1,10 @@
 <?php
 
-require_once('clases/auth.class.php');
-require_once('clases/respuestas.class.php');
+require_once('classes/auth.class.php');
+require_once('classes/responses.class.php');
 
 $_auth = new auth;
-$_respuestas = new respuestas;
+$_responses = new responses;
 
 header('Content-type: application/json');
 
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         http_response_code(200);
     }
 } else {
-    $datosArray = $_respuestas->error_405();
+    $datosArray = $_responses->error_405();
 }
 
 echo json_encode($datosArray);
