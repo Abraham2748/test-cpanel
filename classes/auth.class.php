@@ -57,7 +57,7 @@ class auth extends Connection
 
     private function getUserData($username)
     {
-        $query = "SELECT * FROM User WHERE User = '$username'";
+        $query = "SELECT * FROM User WHERE Username = '$username'";
         $data = parent::getData($query);
         if (isset($data[0]['UserId'])) {
             return $data;
