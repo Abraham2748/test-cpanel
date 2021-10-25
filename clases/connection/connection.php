@@ -45,7 +45,7 @@ class Connection
 
     public function obtenerDatos($sql_query)
     {
-        $results = $this->conexion->query($sql_query);
+        $results = $this->connection->query($sql_query);
         $resultArray = array();
         foreach ($results as $key => $value) {
             $resultArray[] = $value;
@@ -55,16 +55,16 @@ class Connection
 
     public function nonQuery($sql_query)
     {
-        $this->conexion->query($sql_query);
-        return $this->conexion->affected_rows;
+        $this->connection->query($sql_query);
+        return $this->connection->affected_rows;
     }
 
     public function nonQueryId($sql_query)
     {
-        $this->conexion->query($sql_query);
-        $filas = $this->conexion->affected_rows;
+        $this->connection->query($sql_query);
+        $filas = $this->connection->affected_rows;
         if ($filas >= 1) {
-            return $this->conexion->insert_id;
+            return $this->connection->insert_id;
         } else {
             return 0;
         }
