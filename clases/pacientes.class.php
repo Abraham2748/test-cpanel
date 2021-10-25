@@ -18,14 +18,14 @@ class pacientes extends Connection
 
         $query = "SELECT * FROM " . $this->table . " LIMIT $initialRow, $rowsPerPage";
 
-        return parent::obtenerDatos($query);
+        return parent::getData($query);
     }
 
     public function obtenerPaciente($id)
     {
         $_respuestas = new respuestas;
         $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
-        $paciente = parent::obtenerDatos($query);
+        $paciente = parent::getData($query);
         if (sizeof($paciente) == 1) {
             $res = $_respuestas->response;
             $res["result"] = $paciente[0];
