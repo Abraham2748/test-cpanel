@@ -9,10 +9,10 @@ class auth extends Connection
     {
         $_responses = new responses;
         $data = json_decode($json, true);
-        if (isset($data['username']) && isset($data["password"])) {
-            $username = $data["username"];
+        if (isset($data['email']) && isset($data["password"])) {
+            $email = $data["email"];
             $password = md5($data["password"]);
-            $userData = $this->getUserData($username);
+            $userData = $this->getUserData($email);
             if ($userData) {
                 if ($password == $userData[0]["Password"]) {
                     if ($userData[0]["Status"] == 1) {
@@ -27,14 +27,14 @@ class auth extends Connection
                             return $_responses->error_500();
                         }
                     } else {
-                        return $_responses->error_200("User $username is not active.");
+                        return $_responses->error_200("User email $email is not active.");
                     }
                     return $userData;
                 } else {
                     return $_responses->error_200("Incorrect password");
                 }
             } else {
-                return $_responses->error_200("User $username does not exist");
+                return $_responses->error_200("User email $email does not exist");
             }
         } else {
             return $_responses->error_400();
@@ -55,11 +55,11 @@ class auth extends Connection
         }
     }
 
-    private function getUserData($username)
+    private function getUserData($email)
     {
-        $query = "SELECT * FROM User WHERE Username = '$username'";
+        $query = "SELECT * FROM User WHERE Email = '$email'";
         $data = parent::getData($query);
-        if (isset($data[0]['UserId'])) {
+        if (sizeof($data) == 1) {
             return $data;
         } else {
             return null;
