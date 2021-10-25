@@ -1,6 +1,6 @@
 <?php
 
-class responses
+class Responses
 {
 
     public $response = [

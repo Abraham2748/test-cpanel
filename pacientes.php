@@ -2,11 +2,11 @@
 
 require_once('classes/auth.class.php');
 require_once 'classes/responses.class.php';
-require_once 'classes/pacientes.class.php';
+require_once 'classes/patient.class.php';
 
 $_auth = new auth;
-$_responses = new responses;
-$_pacientes = new pacientes;
+$_responses = new Responses;
+$_patient = new Patient;
 
 
 $headers = getallheaders();
@@ -29,37 +29,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET["page"])) {
         $page = $_GET["page"];
         if (isset($_GET["rowsPerPage"])) $rowsPerPage = $_GET["rowsPerPage"];
-        $listaPacientes = $_pacientes->listaPacientes($page, $rowsPerPage);
-        echo json_encode($listaPacientes);
+        $listOfPatients = $_patient->getListOfPatients($page, $rowsPerPage);
+        echo json_encode($listOfPatients);
         http_response_code(200);
     } else if (isset($_GET["id"])) {
-        $pacienteId = $_GET["id"];
-        $datosPaciente = $_pacientes->obtenerPaciente($pacienteId);
-        echo json_encode($datosPaciente);
+        $id = $_GET["id"];
+        $patientData = $_patient->getPatient($id);
+        echo json_encode($patientData);
         http_response_code(200);
     } else {
-        $datosArray = $_responses->error_200();
-        echo json_encode($datosArray);
+        echo json_encode($_responses->error_200());
+        http_response_code(200);
     }
 } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $postBody = file_get_contents("php://input");
-    $response = $_pacientes->agregarPaciente($postBody);
+    $response = $_patient->addPatient($postBody);
     echo json_encode($response);
 } else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $postBody = file_get_contents("php://input");
-    $response = $_pacientes->actualizarPaciente($postBody);
+    $response = $_patient->updatePatient($postBody);
     echo json_encode($response);
 } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     if (isset($_GET['id'])) {
-        $pacienteId = $_GET["id"];
-        $response = $_pacientes->eliminarPaciente($pacienteId);
+        $id = $_GET["id"];
+        $response = $_patient->deletePatient($id);
         echo json_encode($response);
         http_response_code(200);
     } else {
-        $datosArray = $_responses->error_200();
-        echo json_encode($datosArray);
+        echo json_encode($_responses->error_200());
     }
 } else {
-    $datosArray = $_responses->error_405();
-    echo json_encode($datosArray);
+    echo json_encode($_responses->error_405());
 }

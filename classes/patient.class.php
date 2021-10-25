@@ -3,13 +3,13 @@
 require_once "connection/connection.php";
 require_once "responses.class.php";
 
-class pacientes extends Connection
+class Patient extends Connection
 {
 
     private $table = "Patient";
 
 
-    public function listaPacientes($page = 1, $rowsPerPage = 10)
+    public function getListOfPatients($page = 1, $rowsPerPage = 10)
     {
         $initialRow = 0;
         if ($page > 1) {
@@ -21,7 +21,7 @@ class pacientes extends Connection
         return parent::getData($query);
     }
 
-    public function obtenerPaciente($id)
+    public function getPatient($id)
     {
         $_responses = new responses;
         $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
@@ -37,7 +37,7 @@ class pacientes extends Connection
         return $res;
     }
 
-    private function validarPaciente($datos)
+    private function validatePatient($datos)
     {
         return isset($datos["nombre"]) && isset($datos["dni"])
             && isset($datos["correo"]) && isset($datos["direccion"])
@@ -45,12 +45,12 @@ class pacientes extends Connection
             && isset($datos["telefono"]) && isset($datos["fechaNacimiento"]);
     }
 
-    public function agregarPaciente($json)
+    public function addPatient($json)
     {
         $_responses = new responses;
         $datos = json_decode($json, true);
 
-        if ($this->validarPaciente($datos)) {
+        if ($this->validatePatient($datos)) {
             $nombre = $datos["nombre"];
             $dni = $datos["dni"];
             $correo = $datos["correo"];
@@ -77,12 +77,12 @@ class pacientes extends Connection
         }
     }
 
-    public function actualizarPaciente($json)
+    public function updatePatient($json)
     {
         $_responses = new responses;
         $datos = json_decode($json, true);
 
-        if (isset($datos["pacienteId"]) && $this->validarPaciente($datos)) {
+        if (isset($datos["pacienteId"]) && $this->validatePatient($datos)) {
             $pacienteId = $datos["pacienteId"];
             $nombre = $datos["nombre"];
             $dni = $datos["dni"];
@@ -111,7 +111,7 @@ class pacientes extends Connection
     }
 
 
-    public function eliminarPaciente($id)
+    public function deletePatient($id)
     {
         $query = "DELETE FROM " . $this->table . " WHERE PacienteId = '$id'";
         $affected_rows = parent::nonQuery($query);

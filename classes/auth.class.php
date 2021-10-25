@@ -3,7 +3,7 @@
 require_once "connection/connection.php";
 require_once "responses.class.php";
 
-class auth extends Connection
+class Auth extends Connection
 {
     public function login($json)
     {
