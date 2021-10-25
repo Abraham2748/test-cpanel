@@ -44,10 +44,10 @@ class auth extends conexion
     public function validateToken($token)
     {
         $token = substr($token, 7);
-        $query = "SELECT * FROM usuarios_token WHERE Token = '" . $token . "' AND Estado = 'Activo' AND Fecha > DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 HOUR)";
+        $query = "SELECT * FROM UserToken WHERE Token = '" . $token . "' AND Estado = 'Activo' AND Fecha > DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 HOUR)";
         $result = parent::obtenerDatos($query);
         if (sizeof($result) == 1) {
-            $query = "UPDATE usuarios_token SET Fecha = UTC_TIMESTAMP WHERE Token = '" . $token . "'";
+            $query = "UPDATE UserToken SET Fecha = UTC_TIMESTAMP WHERE Token = '" . $token . "'";
             parent::nonQuery($query);
             return true;
         } else {
@@ -57,7 +57,7 @@ class auth extends conexion
 
     private function obtenerDatosUsuario($correo)
     {
-        $query = "SELECT * FROM usuarios WHERE Usuario = '$correo'";
+        $query = "SELECT * FROM User WHERE Usuario = '$correo'";
         $datos = parent::obtenerDatos($query);
         if (isset($datos[0]['UsuarioId'])) {
             return $datos;
@@ -71,7 +71,7 @@ class auth extends conexion
         $cstrong = true;
         $token = bin2hex(openssl_random_pseudo_bytes(16, $cstrong));
         $estado = "Activo";
-        $query = "INSERT INTO usuarios_token (UsuarioId, Token, Estado, Fecha) VALUES ('$usuarioId','$token','$estado', UTC_TIMESTAMP);";
+        $query = "INSERT INTO UserToken (UsuarioId, Token, Estado, Fecha) VALUES ('$usuarioId','$token','$estado', UTC_TIMESTAMP);";
         $existe = parent::nonQuery($query);
         if ($existe) {
             return $token;
