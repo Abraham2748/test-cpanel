@@ -6,7 +6,7 @@ require_once "respuestas.class.php";
 class pacientes extends Connection
 {
 
-    private $table = "pacientes";
+    private $table = "Patient";
 
 
     public function listaPacientes($page = 1, $rowsPerPage = 10)
