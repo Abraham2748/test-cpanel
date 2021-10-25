@@ -45,7 +45,7 @@ class auth extends Connection
     {
         $token = substr($token, 7);
         $query = "SELECT * FROM UserToken WHERE Token = '" . $token . "' AND Estado = 'Activo' AND Fecha > DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 HOUR)";
-        $result = parent::obtenerDatos($query);
+        $result = parent::getData($query);
         if (sizeof($result) == 1) {
             $query = "UPDATE UserToken SET Fecha = UTC_TIMESTAMP WHERE Token = '" . $token . "'";
             parent::nonQuery($query);
@@ -58,7 +58,7 @@ class auth extends Connection
     private function obtenerDatosUsuario($correo)
     {
         $query = "SELECT * FROM User WHERE Usuario = '$correo'";
-        $datos = parent::obtenerDatos($query);
+        $datos = parent::getData($query);
         if (isset($datos[0]['UsuarioId'])) {
             return $datos;
         } else {
