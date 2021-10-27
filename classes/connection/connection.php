@@ -69,4 +69,30 @@ class Connection
             return 0;
         }
     }
+
+    public function callProcedure($procedureName, $parameters)
+    {
+        $sql = "CALL $procedureName(";
+        $i = 0;
+        foreach ($parameters as $key => $value) {
+            if ($i > 0) {
+                $sql .= ", ";
+            }
+            $sql .= "?";
+            $i++;
+        }
+        $sql .= ")";
+        return $sql;
+        $stmt = $this->connection->prepare($sql);
+        $i = 1;
+        foreach ($parameters as $key => $value) {
+            $stmt->bind_param("s", $value);
+            $i++;
+        }
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($result);
+        $stmt->fetch();
+        return $result;
+    }
 }

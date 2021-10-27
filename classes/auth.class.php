@@ -55,6 +55,11 @@ class Auth extends Connection
         }
     }
 
+    public function testSP($sp, $params)
+    {
+        return parent::callProcedure($sp, $params);
+    }
+
     private function getUserData($email)
     {
         $query = "SELECT * FROM User WHERE Email = '$email'";

@@ -11,6 +11,13 @@ $_patient = new Patient;
 
 $headers = getallheaders();
 
+$sp_params = array(
+    '_email' => 'usuario1@gmail.com',
+    '_password' => '827ccb0eea8a706c4c34a16891f84e7b'
+);
+
+return $_auth->testSP('SP_LOGIN', $sp_params);
+
 if (!isset($headers["Authorization"])) {
     echo json_encode($_responses->error_401());
     http_response_code(401);
