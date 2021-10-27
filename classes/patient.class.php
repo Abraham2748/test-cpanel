@@ -24,12 +24,12 @@ class Patient extends Connection
     public function getPatient($id)
     {
         $_responses = new responses;
-        $query = "SELECT * FROM " . $this->table . " WHERE PacienteId = '$id'";
-        $paciente = parent::getData($query);
-        if (sizeof($paciente) == 1) {
+        $query = "SELECT * FROM " . $this->table . " WHERE Id = '$id'";
+        $patient = parent::getData($query);
+        if (sizeof($patient) == 1) {
             $res = $_responses->response;
-            $res["result"] = $paciente[0];
-        } else if (sizeof($paciente) == 0) {
+            $res["result"] = $patient[0];
+        } else if (sizeof($patient) == 0) {
             $res = $_responses->error_200("id not found");
         } else {
             $res = $_responses->error_500();
