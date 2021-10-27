@@ -70,8 +70,7 @@ class Auth extends Connection
     {
         $cryptographicallyStrong = true;
         $token = bin2hex(openssl_random_pseudo_bytes(16, $cryptographicallyStrong));
-        $status = 1;
-        $query = "INSERT INTO UserToken (Id_User, Token, Status, LastDate) VALUES ('$userId','$token','$status', UTC_TIMESTAMP);";
+        $query = "INSERT INTO UserToken (Id_User, Token, LastDate) VALUES ('$userId','$token', UTC_TIMESTAMP);";
         $exist = parent::nonQuery($query);
         if ($exist) {
             return $token;
