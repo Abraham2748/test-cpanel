@@ -82,7 +82,6 @@ class Connection
             $i++;
         }
         $sql .= ")";
-        return $sql;
         $stmt = $this->connection->prepare($sql);
         $i = 1;
         foreach ($parameters as $key => $value) {
