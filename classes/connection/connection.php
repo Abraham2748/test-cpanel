@@ -72,26 +72,17 @@ class Connection
 
     public function callProcedure($procedureName, $parameters)
     {
-        $sql = "CALL $procedureName(";
-        $i = 0;
+        $sql = "CALL " . $procedureName . "(";
         foreach ($parameters as $key => $value) {
-            if ($i > 0) {
-                $sql .= ", ";
-            }
-            $sql .= "?";
-            $i++;
+            $sql .= "'" . $value . "',";
         }
+        $sql = substr($sql, 0, -1);
         $sql .= ")";
-        $stmt = $this->connection->prepare($sql);
-        $i = 1;
-        foreach ($parameters as $key => $value) {
-            $stmt->bind_param("s", $value);
-            $i++;
+        $results = $this->connection->query($sql);
+        $resultArray = array();
+        foreach ($results as $key => $value) {
+            $resultArray[] = $value;
         }
-        $stmt->execute();
-        $stmt->store_result();
-        $stmt->bind_result($result);
-        $stmt->fetch();
-        return $result;
+        return $this->convertUTF8($resultArray);
     }
 }
