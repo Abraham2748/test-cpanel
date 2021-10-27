@@ -16,7 +16,9 @@ $sp_params = array(
     '_password' => '827ccb0eea8a706c4c34a16891f84e7b'
 );
 
-return $_auth->testSP('SP_LOGIN', $sp_params);
+$result = $_auth->testSP('SP_LOGIN', $sp_params);
+echo json_encode($result);
+return;
 
 if (!isset($headers["Authorization"])) {
     echo json_encode($_responses->error_401());
