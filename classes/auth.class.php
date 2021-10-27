@@ -44,7 +44,7 @@ class Auth extends Connection
     public function validateToken($token)
     {
         $token = substr($token, 7);
-        $query = "SELECT * FROM UserToken WHERE Token = '" . $token . "' AND Status = 1 AND LastDate > DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 HOUR)";
+        $query = "SELECT * FROM UserToken WHERE Token = '" . $token . "' AND LastDate > DATE_SUB(UTC_TIMESTAMP, INTERVAL 1 HOUR)";
         $result = parent::getData($query);
         if (sizeof($result) == 1) {
             $query = "UPDATE UserToken SET LastDate = UTC_TIMESTAMP WHERE Token = '" . $token . "'";
