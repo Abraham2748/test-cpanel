@@ -17,8 +17,6 @@ if (!isset($headers["Authorization"])) {
     return;
 } else {
     $authorized = $_auth->validateToken($headers["Authorization"]);
-    echo json_encode($authorized);
-    return;
     if (!$authorized) {
         echo json_encode($_responses->error_401());
         http_response_code(401);
