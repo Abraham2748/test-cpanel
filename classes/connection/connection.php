@@ -78,7 +78,6 @@ class Connection
         }
         $sql = substr($sql, 0, -1);
         $sql .= ")";
-        echo $sql;
         $results = $this->connection->query($sql);
         $resultArray = array();
         foreach ($results as $key => $value) {
