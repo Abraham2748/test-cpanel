@@ -29,6 +29,7 @@ class Auth extends Connection
             '_token' => $token,
         );
         $result = parent::callProcedure('SP_VALIDATE_TOKEN', $params);
+        return $result;
         return $result['authorize'] == 1;
     }
 
