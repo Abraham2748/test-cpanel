@@ -22,6 +22,9 @@ if (!isset($headers["Authorization"])) {
         http_response_code(401);
         return;
     }
+
+    echo json_encode($authorized);
+    return;
 }
 
 
