@@ -12,29 +12,11 @@ class Auth extends Connection
         if (isset($data['email']) && isset($data["password"])) {
             $email = $data["email"];
             $password = md5($data["password"]);
-            $userData = $this->getUserData($email);
+            $userData = $this->getUserData($email, $password);
             if ($userData) {
-                if ($password == $userData[0]["Password"]) {
-                    if ($userData[0]["Status"] == 1) {
-                        $token = $this->insertToken($userData[0]['Id']);
-                        if ($token) {
-                            $result = $_responses->response;
-                            $result['result'] = array(
-                                "token" => $token
-                            );
-                            return $result;
-                        } else {
-                            return $_responses->error_500();
-                        }
-                    } else {
-                        return $_responses->error_200("User email $email is not active.");
-                    }
-                    return $userData;
-                } else {
-                    return $_responses->error_200("Incorrect password");
-                }
+                return $userData;
             } else {
-                return $_responses->error_200("User email $email does not exist");
+                return $_responses->error_200("Wrong email or password");
             }
         } else {
             return $_responses->error_400();
@@ -55,32 +37,17 @@ class Auth extends Connection
         }
     }
 
-    public function testSP($sp, $params)
+    private function getUserData($email, $password)
     {
-        return parent::callProcedure($sp, $params);
-    }
-
-    private function getUserData($email)
-    {
-        $query = "SELECT * FROM User WHERE Email = '$email'";
-        $data = parent::getData($query);
-        if (sizeof($data) == 1) {
-            return $data;
+        $params = array(
+            '_email' => $email,
+            '_password' => $password
+        );
+        $result = parent::callProcedure('SP_LOGIN', $params);
+        if (sizeof($result) == 1) {
+            return $result[0];
         } else {
             return null;
-        }
-    }
-
-    private function insertToken($userId)
-    {
-        $cryptographicallyStrong = true;
-        $token = bin2hex(openssl_random_pseudo_bytes(16, $cryptographicallyStrong));
-        $query = "INSERT INTO UserToken (Id_User, Token, LastDate) VALUES ('$userId','$token', UTC_TIMESTAMP);";
-        $exist = parent::nonQuery($query);
-        if ($exist) {
-            return $token;
-        } else {
-            return false;
         }
     }
 }
