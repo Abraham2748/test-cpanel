@@ -7,7 +7,6 @@ class Patient extends Connection
 {
 
     private $table = "Patient";
-    private $responses = new responses;
 
 
     public function getPatientList($page = 1, $rowsPerPage = 10)
@@ -19,7 +18,8 @@ class Patient extends Connection
         );
         $result = parent::callProcedure('SP_GET_PATIENT_LIST', $params);
 
-        $response = $this->responses->response;
+        $responses = new responses;
+        $response = $responses->response;
         $response["result"] = $result;
 
         return $response;
