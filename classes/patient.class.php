@@ -28,17 +28,11 @@ class Patient extends Connection
 
     public function getPatient($id)
     {
-        $query = "SELECT * FROM " . $this->table . " WHERE Id = '$id'";
-        $patient = parent::getData($query);
-        if (sizeof($patient) == 1) {
-            $res = $this->responses->response;
-            $res["result"] = $patient[0];
-        } else if (sizeof($patient) == 0) {
-            $res = $this->responses->error_200("id not found");
-        } else {
-            $res = $this->responses->error_500();
-        }
-        return $res;
+        $result = parent::callProcedure('SP_GET_PATIENT', array(
+            '_id' => $id
+        ));
+
+        return $this->responses->ok($result);
     }
 
     private function validatePatient($datos)
