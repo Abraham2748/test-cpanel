@@ -12,6 +12,7 @@ class Patient extends Connection
     public function __construct()
     {
         $this->responses = new responses;
+        parent::__construct();
     }
 
 
