@@ -11,12 +11,10 @@ class Patient extends Connection
 
     public function getPatientList($page = 1, $rowsPerPage = 10)
     {
-
-        $params = array(
+        $result = parent::callProcedure('SP_GET_PATIENT_LIST', array(
             '_page' => $page,
             '_rowsPerPage' => $rowsPerPage
-        );
-        $result = parent::callProcedure('SP_GET_PATIENT_LIST', $params);
+        ));
 
         $responses = new responses;
         $response = $responses->response;

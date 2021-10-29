@@ -25,21 +25,18 @@ class Auth extends Connection
 
     public function validateToken($token)
     {
-        $token = substr($token, 7);
-        $params = array(
-            '_token' => $token,
-        );
-        $result = parent::callProcedure('SP_VALIDATE_TOKEN', $params);
+        $result = parent::callProcedure('SP_VALIDATE_TOKEN', array(
+            '_token' => substr($token, 7),
+        ));
         return $result[0]['authorize'] == 1;
     }
 
     private function getUserData($email, $password)
     {
-        $params = array(
+        $result = parent::callProcedure('SP_LOGIN', array(
             '_email' => $email,
             '_password' => $password
-        );
-        $result = parent::callProcedure('SP_LOGIN', $params);
+        ));
         if (sizeof($result) == 1) {
             return $result[0];
         } else {
