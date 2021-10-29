@@ -7,18 +7,22 @@ class Patient extends Connection
 {
 
     private $table = "Patient";
+    private $responses = new responses;
 
 
-    public function getListOfPatients($page = 1, $rowsPerPage = 10)
+    public function getPatientList($page = 1, $rowsPerPage = 10)
     {
-        $initialRow = 0;
-        if ($page > 1) {
-            $initialRow = ($rowsPerPage * ($page - 1));
-        }
 
-        $query = "SELECT * FROM " . $this->table . " LIMIT $initialRow, $rowsPerPage";
+        $params = array(
+            '_page' => $page,
+            '_rowsPerPage' => $rowsPerPage
+        );
+        $result = parent::callProcedure('SP_GET_PATIENT_LIST', $params);
 
-        return parent::getData($query);
+        $response = $this->responses->response;
+        $response["result"] = $result;
+
+        return $response;
     }
 
     public function getPatient($id)

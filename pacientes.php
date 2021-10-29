@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (isset($_GET["page"])) {
         $page = $_GET["page"];
         if (isset($_GET["rowsPerPage"])) $rowsPerPage = $_GET["rowsPerPage"];
-        $listOfPatients = $_patient->getListOfPatients($page, $rowsPerPage);
+        $listOfPatients = $_patient->getPatientList($page, $rowsPerPage);
         echo json_encode($listOfPatients);
         http_response_code(200);
     } else if (isset($_GET["id"])) {
