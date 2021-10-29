@@ -8,6 +8,13 @@ class Responses
         "result" => null
     ];
 
+    public function ok($result)
+    {
+        $this->response["status"] = "ok";
+        $this->response["result"] = $result;
+        return $this->response;
+    }
+
     public function error_405()
     {
         $this->response["status"] = "error";

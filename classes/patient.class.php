@@ -7,6 +7,12 @@ class Patient extends Connection
 {
 
     private $table = "Patient";
+    private $responses;
+
+    public function __construct()
+    {
+        $this->responses = new Responses();
+    }
 
 
     public function getPatientList($page = 1, $rowsPerPage = 10)
@@ -16,25 +22,20 @@ class Patient extends Connection
             '_rowsPerPage' => $rowsPerPage
         ));
 
-        $responses = new responses;
-        $response = $responses->response;
-        $response["result"] = $result;
-
-        return $response;
+        return $this->responses->ok($result);
     }
 
     public function getPatient($id)
     {
-        $_responses = new responses;
         $query = "SELECT * FROM " . $this->table . " WHERE Id = '$id'";
         $patient = parent::getData($query);
         if (sizeof($patient) == 1) {
-            $res = $_responses->response;
+            $res = $this->responses->response;
             $res["result"] = $patient[0];
         } else if (sizeof($patient) == 0) {
-            $res = $_responses->error_200("id not found");
+            $res = $this->responses->error_200("id not found");
         } else {
-            $res = $_responses->error_500();
+            $res = $this->responses->error_500();
         }
         return $res;
     }
@@ -49,7 +50,6 @@ class Patient extends Connection
 
     public function addPatient($json)
     {
-        $_responses = new responses;
         $datos = json_decode($json, true);
 
         if ($this->validatePatient($datos)) {
@@ -68,20 +68,19 @@ class Patient extends Connection
 
             $id = parent::nonQueryId($query);
             if ($id) {
-                $res = $_responses->response;
+                $res = $this->responses->response;
                 $res["result"] = array("pacienteId" => $id);
             } else {
-                $res = $_responses->error_500();
+                $res = $this->responses->error_500();
             }
             return $res;
         } else {
-            return $_responses->error_400();
+            return $this->responses->error_400();
         }
     }
 
     public function updatePatient($json)
     {
-        $_responses = new responses;
         $datos = json_decode($json, true);
 
         if (isset($datos["pacienteId"]) && $this->validatePatient($datos)) {
@@ -102,13 +101,13 @@ class Patient extends Connection
 
             $affected_rows = parent::nonQuery($query);
             if ($affected_rows == 1) {
-                $res = $_responses->response;
+                $res = $this->responses->response;
             } else {
-                $res = $_responses->error_500();
+                $res = $this->responses->error_500();
             }
             return $res;
         } else {
-            return $_responses->error_400();
+            return $this->responses->error_400();
         }
     }
 
@@ -117,13 +116,13 @@ class Patient extends Connection
     {
         $query = "DELETE FROM " . $this->table . " WHERE PacienteId = '$id'";
         $affected_rows = parent::nonQuery($query);
-        $_responses = new responses;
+
         if ($affected_rows == 1) {
-            $res = $_responses->response;
+            $res = $this->responses->response;
         } else if ($affected_rows == 0) {
-            $res = $_responses->error_200("id not found");
+            $res = $this->responses->error_200("id not found");
         } else {
-            $res = $_responses->error_500();
+            $res = $this->responses->error_500();
         }
         return $res;
     }
