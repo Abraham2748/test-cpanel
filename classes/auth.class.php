@@ -37,7 +37,7 @@ class Auth extends Connection
             '_email' => $email,
             '_password' => $password
         ));
-        if (sizeof($result) == 1) {
+        if (count($result) == 1) {
             return $result[0];
         } else {
             return null;
