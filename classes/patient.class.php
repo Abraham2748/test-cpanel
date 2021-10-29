@@ -31,8 +31,11 @@ class Patient extends Connection
         $result = parent::callProcedure('SP_GET_PATIENT', array(
             '_id' => $id
         ));
-
-        return $this->responses->ok($result);
+        if (count($result) == 1) {
+            return $this->responses->ok($result[0]);
+        } else {
+            return $this->responses->error_200("id not found");
+        }
     }
 
     private function validatePatient($datos)
