@@ -73,31 +73,25 @@ class Patient extends Connection
 
     public function updatePatient($json)
     {
-        $datos = json_decode($json, true);
+        $patient = json_decode($json, true);
 
-        if (isset($datos["pacienteId"]) && $this->validatePatient($datos)) {
-            $pacienteId = $datos["pacienteId"];
-            $nombre = $datos["nombre"];
-            $dni = $datos["dni"];
-            $correo = $datos["correo"];
-            $direccion = $datos["direccion"];
-            $codigoPostal = $datos["codigoPostal"];
-            $genero = $datos["genero"];
-            $telefono = $datos["telefono"];
-            $fechaNacimiento = $datos["fechaNacimiento"];
-
-            $query = "UPDATE " . $this->table . " SET DNI = '" . $dni . "', Nombre = '" . $nombre
-                . "', Direccion = '" . $direccion . "', CodigoPostal = '" . $codigoPostal . "', "
-                . "Telefono = '" . $telefono . "', Genero = '" . $genero . "', FechaNacimiento = '" . $fechaNacimiento . "', "
-                . "Correo = '" . $correo . "' WHERE PacienteId = " . $pacienteId;
-
-            $affected_rows = parent::nonQuery($query);
-            if ($affected_rows == 1) {
-                $res = $this->responses->response;
+        if (isset($patient["id"]) && $this->validatePatient($patient)) {
+            $result = parent::callProcedure('SP_UPDATE_PATIENT', array(
+                '_id' => $patient["id"],
+                '_fullName' => $patient["fullName"],
+                '_documentNumber' => $patient["documentNumber"],
+                '_email' => $patient["email"],
+                '_address' => $patient["address"],
+                '_postalCode' => $patient["postalCode"],
+                '_gender' => $patient["gender"],
+                '_phoneNumber' => $patient["phoneNumber"],
+                '_birthday' => $patient["birthday"]
+            ));
+            if (isset($result["error_message"])) {
+                return $this->responses->error_200($result["error_message"]);
             } else {
-                $res = $this->responses->error_500();
+                return $this->responses->ok("Patient updated successfully");
             }
-            return $res;
         } else {
             return $this->responses->error_400();
         }
