@@ -48,30 +48,24 @@ class Patient extends Connection
 
     public function addPatient($json)
     {
-        $datos = json_decode($json, true);
+        $patient = json_decode($json, true);
 
-        if ($this->validatePatient($datos)) {
-            $nombre = $datos["nombre"];
-            $dni = $datos["dni"];
-            $correo = $datos["correo"];
-            $direccion = $datos["direccion"];
-            $codigoPostal = $datos["codigoPostal"];
-            $genero = $datos["genero"];
-            $telefono = $datos["telefono"];
-            $fechaNacimiento = $datos["fechaNacimiento"];
-
-            $query = "INSERT INTO " . $this->table . " (DNI, Nombre, Direccion, CodigoPostal, Telefono, Genero, FechaNacimiento, Correo) VALUES ('"
-                . $dni . "', '" . $nombre . "', '" . $direccion . "', '" . $codigoPostal . "', '"
-                . $telefono . "', '" . $genero . "', '" . $fechaNacimiento . "', '" . $correo . "');";
-
-            $id = parent::nonQueryId($query);
-            if ($id) {
-                $res = $this->responses->response;
-                $res["result"] = array("pacienteId" => $id);
+        if ($this->validatePatient($patient)) {
+            $result = parent::callProcedure('SP_ADD_PATIENT', array(
+                '_fullName' => $patient["fullName"],
+                '_documentNumber' => $patient["documentNumber"],
+                '_email' => $patient["email"],
+                '_address' => $patient["address"],
+                '_postalCode' => $patient["postalCode"],
+                '_gender' => $patient["gender"],
+                '_phoneNumber' => $patient["phoneNumber"],
+                '_birthday' => $patient["birthday"]
+            ));
+            if (isset($result["error_message"])) {
+                return $this->responses->error_200($result["error_message"]);
             } else {
-                $res = $this->responses->error_500();
+                return $this->responses->ok("Patient added successfully");
             }
-            return $res;
         } else {
             return $this->responses->error_400();
         }
