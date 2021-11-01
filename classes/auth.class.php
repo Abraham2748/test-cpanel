@@ -11,7 +11,7 @@ class Auth extends Connection
         $data = json_decode($json, true);
         if (isset($data['email']) && isset($data["password"])) {
             $email = $data["email"];
-            $password = md5($data["password"]);
+            $password = $data["password"];
             $userData = $this->getUserData($email, $password);
             if ($userData) {
                 return $userData;
