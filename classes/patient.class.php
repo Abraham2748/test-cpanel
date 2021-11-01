@@ -62,7 +62,7 @@ class Patient extends Connection
                 '_birthday' => $patient["birthday"]
             ));
             if (isset($result["error_message"])) {
-                return $this->responses->error_200($result["error_message"]);
+                return $this->responses->error_200($result[0]["error_message"]);
             } else {
                 return $this->responses->ok("Patient added successfully");
             }
@@ -87,7 +87,7 @@ class Patient extends Connection
                 '_phoneNumber' => $patient["phoneNumber"],
                 '_birthday' => $patient["birthday"]
             ));
-            if (isset($result["error_message"])) {
+            if (isset($result[0]["error_message"])) {
                 return $this->responses->error_200($result["error_message"]);
             } else {
                 return $this->responses->ok("Patient updated successfully");
@@ -103,8 +103,8 @@ class Patient extends Connection
         $result = parent::callProcedure('SP_DELETE_PATIENT', array(
             '_id' => $id,
         ));
-        if (isset($result["error_message"])) {
-            return $this->responses->error_200($result["error_message"]);
+        if (isset($result[0]["error_message"])) {
+            return $this->responses->error_200($result[0]["error_message"]);
         } else {
             return $this->responses->ok("Patient deleted successfully");
         }
