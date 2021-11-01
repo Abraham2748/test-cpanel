@@ -28,7 +28,7 @@ class Auth extends Connection
         $result = parent::callProcedure('SP_VALIDATE_TOKEN', array(
             '_token' => substr($token, 7),
         ));
-        return $result[0]['authorize'] == 1;
+        return $result[0]['Authorize'] == 1;
     }
 
     private function getUserData($email, $password)
