@@ -34,7 +34,7 @@ class Patient extends Connection
         if (count($result) == 1) {
             return $this->responses->ok($result[0]);
         } else {
-            return $this->responses->error_200("id not found");
+            return $this->responses->error_200("Patient not found");
         }
     }
 
