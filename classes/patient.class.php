@@ -100,16 +100,13 @@ class Patient extends Connection
 
     public function deletePatient($id)
     {
-        $query = "DELETE FROM " . $this->table . " WHERE PacienteId = '$id'";
-        $affected_rows = parent::nonQuery($query);
-
-        if ($affected_rows == 1) {
-            $res = $this->responses->response;
-        } else if ($affected_rows == 0) {
-            $res = $this->responses->error_200("id not found");
+        $result = parent::callProcedure('SP_DELETE_PATIENT', array(
+            '_id' => $id,
+        ));
+        if (isset($result["error_message"])) {
+            return $this->responses->error_200($result["error_message"]);
         } else {
-            $res = $this->responses->error_500();
+            return $this->responses->ok("Patient deleted successfully");
         }
-        return $res;
     }
 }
