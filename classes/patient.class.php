@@ -38,12 +38,12 @@ class Patient extends Connection
         }
     }
 
-    private function validatePatient($datos)
+    private function validatePatient($patient)
     {
-        return isset($datos["nombre"]) && isset($datos["dni"])
-            && isset($datos["correo"]) && isset($datos["direccion"])
-            && isset($datos["codigoPostal"]) && isset($datos["genero"])
-            && isset($datos["telefono"]) && isset($datos["fechaNacimiento"]);
+        return isset($patient["fullName"]) && isset($patient["documentNumber"])
+            && isset($patient["email"]) && isset($patient["address"])
+            && isset($patient["postalCode"]) && isset($patient["gender"])
+            && isset($patient["phoneNumber"]) && isset($patient["birthday"]);
     }
 
     public function addPatient($json)
