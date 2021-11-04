@@ -29,7 +29,7 @@ class Connection
     private function configList()
     {
         $current = dirname(__FILE__);
-        $data = file_get_contents($current . "/" . "config");
+        $data = file_get_contents($current . "/" . "config.json");
         return json_decode($data, true);
     }
 
