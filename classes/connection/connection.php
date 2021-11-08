@@ -83,6 +83,6 @@ class Connection
         foreach ($results as $key => $value) {
             $resultArray[] = $value;
         }
-        return $this->convertUTF8($resultArray);
+        return $resultArray;
     }
 }
