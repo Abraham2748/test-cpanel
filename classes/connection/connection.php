@@ -33,16 +33,6 @@ class Connection
         return json_decode($data, true);
     }
 
-    private function convertUTF8($array)
-    {
-        array_walk_recursive($array, function (&$item, $key) {
-            if (!mb_detect_encoding($item, 'utf-8', true)) {
-                $item = utf8_encode($item);
-            }
-        });
-        return $array;
-    }
-
     public function getData($sql_query)
     {
         $results = $this->connection->query($sql_query);
@@ -50,7 +40,7 @@ class Connection
         foreach ($results as $key => $value) {
             $resultArray[] = $value;
         }
-        return $this->convertUTF8($resultArray);
+        return $resultArray;
     }
 
     public function nonQuery($sql_query)
